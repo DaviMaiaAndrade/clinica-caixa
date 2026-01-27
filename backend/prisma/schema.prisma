@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Especialidade {
+  id        String     @id @default(uuid())
+  nome      String     @unique
+  ativo     Boolean    @default(true)
+  consultas Consulta[]
+  medicos   Medico[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Medico {
+  id              String        @id @default(uuid())
+  nome            String
+  especialidadeId String
+  especialidade   Especialidade @relation(fields: [especialidadeId], references: [id])
+  percentual      Float         @default(50.0)
+  ativo           Boolean       @default(true)
+  consultas       Consulta[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Consulta {
+  id              String        @id @default(uuid())
+  data            DateTime
+  quantidade      Int           @default(1)
+  especialidadeId String
+  especialidade   Especialidade @relation(fields: [especialidadeId], references: [id])
+  medicoId        String
+  medico          Medico        @relation(fields: [medicoId], references: [id])
+  valorDinheiro   Float         @default(0)
+  valorCartao     Float         @default(0)
+  valorPix        Float         @default(0)
+  valorTotal      Float
+  valorMedico     Float
+  valorClinica    Float
+  observacao      String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Despesa {
+  id             String   @id @default(uuid())
+  data           DateTime
+  descricao      String
+  valor          Float
+  categoria      String
+  formaPagamento String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Movimentacao {
+  id        String   @id @default(uuid())
+  data      DateTime
+  tipo      String
+  valor     Float
+  descricao String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SaldoCaixa {
+  id           String   @id @default(uuid())
+  data         DateTime @unique
+  saldoInicial Float    @default(0)
+  saldoFinal   Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
