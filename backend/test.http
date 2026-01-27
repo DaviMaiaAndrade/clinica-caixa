@@ -1,0 +1,52 @@
+### Listar todas as especialidades
+GET http://localhost:3000/especialidades
+
+###
+
+### Criar especialidade - Cardiologia
+POST http://localhost:3000/especialidades
+Content-Type: application/json
+
+{
+  "nome": "Cardiologia"
+}
+
+###
+
+### Criar especialidade - Ortopedia
+POST http://localhost:3000/especialidades
+Content-Type: application/json
+
+{
+  "nome": "Ortopedia"
+}
+
+###
+
+### Criar especialidade - Dermatologia
+POST http://localhost:3000/especialidades
+Content-Type: application/json
+
+{
+  "nome": "Dermatologia"
+}
+
+###
+
+### Buscar especialidade por ID (substitua pelo ID real)
+GET http://localhost:3000/especialidades/ID_AQUI
+
+###
+
+### Atualizar especialidade (substitua pelo ID real)
+PATCH http://localhost:3000/especialidades/ID_AQUI
+Content-Type: application/json
+
+{
+  "nome": "Cardiologia Clínica"
+}
+
+###
+
+### Deletar especialidade (soft delete - substitua pelo ID real)
+DELETE http://localhost:3000/especialidades/ID_AQUI
