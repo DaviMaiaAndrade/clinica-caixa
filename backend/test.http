@@ -1,3 +1,11 @@
+### ============================================
+### SISTEMA DE GESTÃO FINANCEIRA - CLÍNICA
+### ============================================
+
+### ============================================
+### ESPECIALIDADES
+### ============================================
+
 ### Listar todas as especialidades
 GET http://localhost:3000/especialidades
 
@@ -33,13 +41,25 @@ Content-Type: application/json
 
 ###
 
-### Buscar especialidade por ID (substitua pelo ID real)
-GET http://localhost:3000/especialidades/ID_AQUI
+### Criar especialidade - Endocrinologia
+POST http://localhost:3000/especialidades
+Content-Type: application/json
+
+{
+  "nome": "Endocrinologia"
+}
 
 ###
 
-### Atualizar especialidade (substitua pelo ID real)
-PATCH http://localhost:3000/especialidades/ID_AQUI
+### Buscar especialidade por ID
+# Substitua ESPECIALIDADE_ID por um ID real retornado no GET
+GET http://localhost:3000/especialidades/ESPECIALIDADE_ID
+
+###
+
+### Atualizar especialidade
+# Substitua ESPECIALIDADE_ID por um ID real
+PATCH http://localhost:3000/especialidades/ESPECIALIDADE_ID
 Content-Type: application/json
 
 {
@@ -48,8 +68,11 @@ Content-Type: application/json
 
 ###
 
-### Deletar especialidade (soft delete - substitua pelo ID real)
-DELETE http://localhost:3000/especialidades/ID_AQUI
+### Deletar especialidade (soft delete)
+# Substitua ESPECIALIDADE_ID por um ID real
+DELETE http://localhost:3000/especialidades/ESPECIALIDADE_ID
+
+###
 
 ### ============================================
 ### MÉDICOS
@@ -60,30 +83,60 @@ GET http://localhost:3000/medicos
 
 ###
 
-### Criar médico (substitua especialidadeId por um ID real)
+### Criar médico - Dr. João Silva (Cardiologista)
+# Substitua ESPECIALIDADE_ID pelo ID da especialidade Cardiologia
 POST http://localhost:3000/medicos
 Content-Type: application/json
 
 {
   "nome": "Dr. João Silva",
-  "especialidadeId": "d9e8fbd0-c5ff-4916-98ea-0261e40dac85",
+  "especialidadeId": "ESPECIALIDADE_ID",
   "percentual": 60
 }
 
 ###
 
+### Criar médico - Dra. Maria Santos (Ortopedista)
+# Substitua ESPECIALIDADE_ID pelo ID da especialidade Ortopedia
+POST http://localhost:3000/medicos
+Content-Type: application/json
+
+{
+  "nome": "Dra. Maria Santos",
+  "especialidadeId": "ESPECIALIDADE_ID",
+  "percentual": 55
+}
+
+###
+
+### Criar médico - Dr. Carlos Oliveira (Dermatologista)
+# Substitua ESPECIALIDADE_ID pelo ID da especialidade Dermatologia
+POST http://localhost:3000/medicos
+Content-Type: application/json
+
+{
+  "nome": "Dr. Carlos Oliveira",
+  "especialidadeId": "ESPECIALIDADE_ID",
+  "percentual": 50
+}
+
+###
+
 ### Listar médicos por especialidade
-GET http://localhost:3000/medicos?especialidadeId=ID_DA_ESPECIALIDADE_AQUI
+# Substitua ESPECIALIDADE_ID por um ID real
+GET http://localhost:3000/medicos?especialidadeId=ESPECIALIDADE_ID
 
 ###
 
 ### Buscar médico por ID
-GET http://localhost:3000/medicos/ID_DO_MEDICO_AQUI
+# Substitua MEDICO_ID por um ID real
+GET http://localhost:3000/medicos/MEDICO_ID
 
 ###
 
 ### Atualizar médico
-PATCH http://localhost:3000/medicos/ID_DO_MEDICO_AQUI
+# Substitua MEDICO_ID por um ID real
+PATCH http://localhost:3000/medicos/MEDICO_ID
 Content-Type: application/json
 
 {
@@ -92,22 +145,11 @@ Content-Type: application/json
 
 ###
 
-### Deletar médico
-DELETE http://localhost:3000/medicos/ID_DO_MEDICO_AQUI
-```
+### Deletar médico (soft delete)
+# Substitua MEDICO_ID por um ID real
+DELETE http://localhost:3000/medicos/MEDICO_ID
 
----
-
-## **✅ TESTAR:**
-
-O servidor deve recompilar automaticamente!
-
-**Deve aparecer:**
-```
-[Nest] LOG [RoutesResolver] MedicosController {/medicos}:
-[Nest] LOG [RouterExplorer] Mapped {/medicos, POST} route
-[Nest] LOG [RouterExplorer] Mapped {/medicos, GET} route
-...
+###
 
 ### ============================================
 ### CONSULTAS
@@ -118,15 +160,17 @@ GET http://localhost:3000/consultas
 
 ###
 
-### Criar consulta (substitua IDs)
+### Criar consulta - Exemplo 1 (Pagamento misto)
+# Substitua ESPECIALIDADE_ID e MEDICO_ID por IDs reais
+# Os valores de valorTotal, valorMedico e valorClinica são calculados automaticamente
 POST http://localhost:3000/consultas
 Content-Type: application/json
 
 {
   "data": "2026-01-27",
   "quantidade": 2,
-  "especialidadeId": "d9e8fbd0-c5ff-4916-98ea-0261e40dac85",
-  "medicoId": "f5c700db-3de6-46cc-beff-427569408f80",
+  "especialidadeId": "ESPECIALIDADE_ID",
+  "medicoId": "MEDICO_ID",
   "valorDinheiro": 100,
   "valorCartao": 200,
   "valorPix": 50,
@@ -135,28 +179,76 @@ Content-Type: application/json
 
 ###
 
-### Buscar consulta por ID
-GET http://localhost:3000/consultas/ID_DA_CONSULTA
+### Criar consulta - Exemplo 2 (Apenas dinheiro)
+# Substitua ESPECIALIDADE_ID e MEDICO_ID por IDs reais
+POST http://localhost:3000/consultas
+Content-Type: application/json
+
+{
+  "data": "2026-01-27",
+  "quantidade": 1,
+  "especialidadeId": "ESPECIALIDADE_ID",
+  "medicoId": "MEDICO_ID",
+  "valorDinheiro": 300,
+  "observacao": "Consulta de retorno"
+}
 
 ###
 
-### Filtrar consultas por período
+### Criar consulta - Exemplo 3 (Apenas cartão)
+# Substitua ESPECIALIDADE_ID e MEDICO_ID por IDs reais
+POST http://localhost:3000/consultas
+Content-Type: application/json
+
+{
+  "data": "2026-01-28",
+  "quantidade": 1,
+  "especialidadeId": "ESPECIALIDADE_ID",
+  "medicoId": "MEDICO_ID",
+  "valorCartao": 250
+}
+
+###
+
+### Buscar consulta por ID
+# Substitua CONSULTA_ID por um ID real
+GET http://localhost:3000/consultas/CONSULTA_ID
+
+###
+
+### Filtrar consultas por período (Janeiro 2026)
 GET http://localhost:3000/consultas?startDate=2026-01-01&endDate=2026-01-31
 
 ###
 
 ### Filtrar consultas por médico
-GET http://localhost:3000/consultas?medicoId=ID_DO_MEDICO
+# Substitua MEDICO_ID por um ID real
+GET http://localhost:3000/consultas?medicoId=MEDICO_ID
 
 ###
 
-### Totais por período
+### Filtrar consultas por especialidade
+# Substitua ESPECIALIDADE_ID por um ID real
+GET http://localhost:3000/consultas?especialidadeId=ESPECIALIDADE_ID
+
+###
+
+### Filtrar consultas por médico E período
+# Substitua MEDICO_ID por um ID real
+GET http://localhost:3000/consultas?medicoId=MEDICO_ID&startDate=2026-01-01&endDate=2026-01-31
+
+###
+
+### Obter totais do período (Janeiro 2026)
+# Retorna soma de todos os valores do período
 GET http://localhost:3000/consultas/totais?startDate=2026-01-01&endDate=2026-01-31
 
 ###
 
-### Atualizar consulta
-PATCH http://localhost:3000/consultas/ID_DA_CONSULTA
+### Atualizar consulta - Alterar valor
+# Substitua CONSULTA_ID por um ID real
+# Os valores totais serão recalculados automaticamente
+PATCH http://localhost:3000/consultas/CONSULTA_ID
 Content-Type: application/json
 
 {
@@ -165,5 +257,66 @@ Content-Type: application/json
 
 ###
 
+### Atualizar consulta - Alterar observação
+# Substitua CONSULTA_ID por um ID real
+PATCH http://localhost:3000/consultas/CONSULTA_ID
+Content-Type: application/json
+
+{
+  "observacao": "Paciente solicitou encaminhamento"
+}
+
+###
+
 ### Deletar consulta
-DELETE http://localhost:3000/consultas/ID_DA_CONSULTA
+# Substitua CONSULTA_ID por um ID real
+DELETE http://localhost:3000/consultas/CONSULTA_ID
+
+###
+
+### ============================================
+### EXEMPLOS DE FLUXO COMPLETO
+### ============================================
+
+### PASSO 1: Criar especialidade
+POST http://localhost:3000/especialidades
+Content-Type: application/json
+
+{
+  "nome": "Oftalmologia"
+}
+
+# Copie o ID retornado
+
+###
+
+### PASSO 2: Criar médico usando o ID da especialidade
+POST http://localhost:3000/medicos
+Content-Type: application/json
+
+{
+  "nome": "Dra. Ana Paula",
+  "especialidadeId": "COLE_O_ID_DA_ESPECIALIDADE_AQUI",
+  "percentual": 55
+}
+
+# Copie o ID do médico retornado
+
+###
+
+### PASSO 3: Criar consulta usando os IDs
+POST http://localhost:3000/consultas
+Content-Type: application/json
+
+{
+  "data": "2026-01-27",
+  "quantidade": 1,
+  "especialidadeId": "COLE_O_ID_DA_ESPECIALIDADE_AQUI",
+  "medicoId": "COLE_O_ID_DO_MEDICO_AQUI",
+  "valorDinheiro": 200,
+  "valorCartao": 100
+}
+
+# Observe que valorTotal (300), valorMedico (165) e valorClinica (135) são calculados automaticamente!
+
+###
