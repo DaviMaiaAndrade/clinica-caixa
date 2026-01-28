@@ -50,3 +50,120 @@ Content-Type: application/json
 
 ### Deletar especialidade (soft delete - substitua pelo ID real)
 DELETE http://localhost:3000/especialidades/ID_AQUI
+
+### ============================================
+### MÉDICOS
+### ============================================
+
+### Listar todos os médicos
+GET http://localhost:3000/medicos
+
+###
+
+### Criar médico (substitua especialidadeId por um ID real)
+POST http://localhost:3000/medicos
+Content-Type: application/json
+
+{
+  "nome": "Dr. João Silva",
+  "especialidadeId": "d9e8fbd0-c5ff-4916-98ea-0261e40dac85",
+  "percentual": 60
+}
+
+###
+
+### Listar médicos por especialidade
+GET http://localhost:3000/medicos?especialidadeId=ID_DA_ESPECIALIDADE_AQUI
+
+###
+
+### Buscar médico por ID
+GET http://localhost:3000/medicos/ID_DO_MEDICO_AQUI
+
+###
+
+### Atualizar médico
+PATCH http://localhost:3000/medicos/ID_DO_MEDICO_AQUI
+Content-Type: application/json
+
+{
+  "percentual": 65
+}
+
+###
+
+### Deletar médico
+DELETE http://localhost:3000/medicos/ID_DO_MEDICO_AQUI
+```
+
+---
+
+## **✅ TESTAR:**
+
+O servidor deve recompilar automaticamente!
+
+**Deve aparecer:**
+```
+[Nest] LOG [RoutesResolver] MedicosController {/medicos}:
+[Nest] LOG [RouterExplorer] Mapped {/medicos, POST} route
+[Nest] LOG [RouterExplorer] Mapped {/medicos, GET} route
+...
+
+### ============================================
+### CONSULTAS
+### ============================================
+
+### Listar todas as consultas
+GET http://localhost:3000/consultas
+
+###
+
+### Criar consulta (substitua IDs)
+POST http://localhost:3000/consultas
+Content-Type: application/json
+
+{
+  "data": "2026-01-27",
+  "quantidade": 2,
+  "especialidadeId": "d9e8fbd0-c5ff-4916-98ea-0261e40dac85",
+  "medicoId": "f5c700db-3de6-46cc-beff-427569408f80",
+  "valorDinheiro": 100,
+  "valorCartao": 200,
+  "valorPix": 50,
+  "observacao": "Consulta de rotina"
+}
+
+###
+
+### Buscar consulta por ID
+GET http://localhost:3000/consultas/ID_DA_CONSULTA
+
+###
+
+### Filtrar consultas por período
+GET http://localhost:3000/consultas?startDate=2026-01-01&endDate=2026-01-31
+
+###
+
+### Filtrar consultas por médico
+GET http://localhost:3000/consultas?medicoId=ID_DO_MEDICO
+
+###
+
+### Totais por período
+GET http://localhost:3000/consultas/totais?startDate=2026-01-01&endDate=2026-01-31
+
+###
+
+### Atualizar consulta
+PATCH http://localhost:3000/consultas/ID_DA_CONSULTA
+Content-Type: application/json
+
+{
+  "valorDinheiro": 150
+}
+
+###
+
+### Deletar consulta
+DELETE http://localhost:3000/consultas/ID_DA_CONSULTA
