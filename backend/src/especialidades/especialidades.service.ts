@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateEspecialidadeDto } from './dto/create-especialidade.dto';
 import { UpdateEspecialidadeDto } from './dto/update-especialidade.dto';
@@ -8,14 +8,21 @@ export class EspecialidadesService {
   constructor(private prisma: PrismaService) {}
 
   async create(createEspecialidadeDto: CreateEspecialidadeDto) {
-    return this.prisma.especialidade.create({
-      data: createEspecialidadeDto,
-    });
+    try {
+      return await this.prisma.especialidade.create({
+        data: createEspecialidadeDto,
+      });
+    } catch (error: any) {
+      // Erro de duplicata (Prisma P2002)
+      if (error.code === 'P2002') {
+        throw new BadRequestException('Já existe uma especialidade com este nome');
+      }
+      throw error;
+    }
   }
 
   async findAll() {
     return this.prisma.especialidade.findMany({
-      where: { ativo: true },
       orderBy: { nome: 'asc' },
     });
   }
